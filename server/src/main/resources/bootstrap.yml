@@ -13,7 +13,7 @@ spring:
     name: producer
   output:
     ansi:
-      enabled: DETECT
+      enabled: always
   cloud:
     consul:
       discovery:
