@@ -1,6 +1,6 @@
 package cn.sh.lz.producer.controllers;
 
-import cn.sh.lz.producer.client.ProducerClient;
+import cn.sh.lz.producer.clients.ProducerClient;
 import cn.sh.lz.producer.entities.output.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * Created by Link at 11:07 on 3/29/19.
+ * Created by Link at 16:10 on 4/9/19.
  */
-@RestController
 @RequestMapping("/feign/producer")
+@RestController
 public class FeignController {
     @Autowired
     private DiscoveryClient discoveryClient;
@@ -23,13 +23,18 @@ public class FeignController {
     @Autowired
     private ProducerClient producerClient;
 
-    @GetMapping(value = "/hello/services")
-    public List<ServiceInstance> helloServices() {
+    @GetMapping(value = "/instances")
+    public List<ServiceInstance> instances() {
         return discoveryClient.getInstances("producer");
     }
 
     @GetMapping(value = "/hello")
     public Greeting hello() {
-        return producerClient.serverHello();
+        return producerClient.productHello();
+    }
+
+    @GetMapping(value = "/msg")
+    public String msg() {
+        return producerClient.productMsg();
     }
 }

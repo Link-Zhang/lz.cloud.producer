@@ -30,7 +30,6 @@
             <optional>true</optional>
         </dependency>
 
-
         <!--Swagger 2-->
         <dependency>
             <groupId>io.springfox</groupId>

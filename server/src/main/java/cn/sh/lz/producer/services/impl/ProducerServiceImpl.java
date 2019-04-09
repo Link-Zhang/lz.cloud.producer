@@ -1,27 +1,31 @@
-package cn.sh.lz.producer.controllers;
+package cn.sh.lz.producer.services.impl;
 
 import cn.sh.lz.producer.entities.output.Greeting;
+import cn.sh.lz.producer.services.ProducerService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Created by Link at 14:29 on 4/4/19.
+ * Created by Link at 15:22 on 4/9/19.
  */
-@RestController
-public class HelloController {
+@Service
+public class ProducerServiceImpl implements ProducerService {
     @Value("${spring.cloud.consul.discovery.instance-id}")
     private String serviceInstanceId;
 
     private static final String template = "Hello, %s!";
+    
     private final AtomicLong counter = new AtomicLong();
 
-    @GetMapping("/hello")
-    @ResponseBody
+    @Override
     public Greeting hello() {
         return new Greeting(counter.incrementAndGet(), String.format(template, serviceInstanceId));
+    }
+
+    @Override
+    public String msg() {
+        return "This is producer msg!";
     }
 }
